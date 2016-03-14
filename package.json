@@ -1,0 +1,36 @@
+{
+  "name": "taxi",
+  "version": "1.0.0",
+  "description": "Taxinomical and identifiable templates",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tappily/taxi.git"
+  },
+  "keywords": [
+    "template",
+    "taxinomy",
+    "assemble",
+    "grunt"
+  ],
+  "author": "tappily",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/tappily/taxi/issues"
+  },
+  "homepage": "https://github.com/tappily/taxi#readme",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-assemble": "^0.4.0",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-less": "^1.2.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-release": "^0.13.0",
+    "load-grunt-tasks": "^3.4.1"
+  }
+}
