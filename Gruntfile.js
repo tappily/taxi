@@ -25,6 +25,14 @@ module.exports = function(grunt) {
 				},
 				src: ['src/templates/site/index.hbs'],
 				dest: 'tmp/assemble/'
+			},
+			wizard: {
+				options: {
+					data: ['src/data/wizard/*.json'],
+					layout: 'article.hbs'
+				},
+				src: ['src/templates/site/wizard.hbs'],
+				dest: 'tmp/assemble/'
 			}
 		},
 		jshint: {

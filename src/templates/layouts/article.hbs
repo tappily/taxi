@@ -1,0 +1,14 @@
+{{#extend 'default'}}
+    {{#content 'styles' mode='append'}}{{{css 'component/wizard.css'}}}{{/content}}
+    {{#content 'main'}}<main>
+        {{#eachProperty options}}
+            <label>
+                {{sentence key}}
+            </label>
+            <select name="{{key}}">
+            {{#each value}}<option{{#is @index 0}} selected{{/is}}>{{.}}</option>{{/each}}
+            </select>
+        {{/eachProperty}}
+        <div{{#eachProperty options}} data-{{key}}="{{first value}}"{{/eachProperty}}></div>
+        {{> body}}</main>{{/content}}
+{{/extend}}
