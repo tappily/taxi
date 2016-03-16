@@ -6,8 +6,11 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		conf: grunt.file.readYAML('conf.yml'),
 		pkg: grunt.file.readJSON('package.json'),
+		banner:  '/*!\n<%=pkg.name%> - v<%= pkg.version %> - <%= grunt.template.today("mm-dd-yyyy, h:MM:ss TT") %>\n'.concat(grunt.file.read('LICENSE'), '*/\n\n'),
 		clean: {
-			all: ['dist', 'tmp']
+			all: ['dist', 'tmp'],
+			public: ['<%=conf.public%>'],
+			'public-scripts': ['<%=conf.public%>/js']
 		},
 		assemble: {
 			options: {
@@ -23,23 +26,27 @@ module.exports = function(grunt) {
 					data: ['src/data/index/*.{yml,json}'],
 					layout: 'index.hbs'
 				},
-				src: ['src/templates/site/index.hbs'],
-				dest: 'tmp/assemble/'
+				dest: '<%=conf.public%>/',
+				src: ['src/templates/site/index.hbs']
 			},
 			wizard: {
 				options: {
 					data: ['src/data/wizard/*.{yml,json}'],
 					layout: 'article.hbs'
 				},
-				src: ['src/templates/site/wizard.hbs'],
-				dest: 'tmp/assemble/'
+				dest: '<%=conf.public%>/',
+				src: ['src/templates/site/wizard.hbs']
 			}
+		},
+		concurrent: {
+			public: ['requirejs:site', 'assemble'],
+			'public-scripts': ['clean"public-scripts', ['test', 'requirejs:site']]
 		},
 		connect: {
 			server: {
 				options: {
 					port: 9000,
-					base: ['tmp/assemble'],
+					base: ['<%=conf.public%>'],
 					open: true,
 					livereload: true
 				}
@@ -52,6 +59,21 @@ module.exports = function(grunt) {
 		release: {
 			options: {}
 		},
+		requirejs: {
+			options: {
+				baseUrl: 'src/js',
+				mainConfigFile: 'src/js/config.js',
+				name: 'almond'
+			},
+			site: {
+				options: {
+					mainConfigFile: 'src/js/config.js',
+					include: ['site'],
+					out: '<%=conf.public%>/js/site.js',
+					insertRequire: ['site']
+				}
+			}
+		},
 		watch: {
 			options: {
 				livereload: true
@@ -60,8 +82,12 @@ module.exports = function(grunt) {
 				files: 'src/data/**/*.{yml,json}',
 				tasks: ['assemble']
 			},
-			temp: {
-				files: ['tmp/assemble/**/*']
+			public: {
+				files: ['<%=conf.public%>/**/*']
+			},
+			scripts: {
+				files: 'src/js/**/*.js',
+				tasks: ['concurrent:public-scripts']
 			},
 			site: {
 				files: 'src/site/**/*',
@@ -76,6 +102,5 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('default', []);
 	grunt.registerTask('test', ['jshint']);
-	grunt.registerTask('build', ['clean', 'test', 'assemble']);
-	grunt.registerTask('live', ['build', 'connect:server', 'watch']);
+	grunt.registerTask('live', ['clean', 'test', 'concurrent:public', 'connect:server', 'watch']);
 };

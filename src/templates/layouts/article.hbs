@@ -1,5 +1,6 @@
 {{#extend 'default'}}
     {{#content 'styles' mode='append'}}{{{css 'component/wizard.css'}}}{{/content}}
+    {{#content 'scripts' mode='append'}}{{{js 'site.js'}}}{{/content}}
     {{#content 'main'}}<main>
         <form action="#{{meta.cid}}" method="get">
             {{#eachProperty options}}
