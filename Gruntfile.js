@@ -20,7 +20,7 @@ module.exports = function(grunt) {
 			},
 			index: {
 				options: {
-					data: ['src/data/*.{yml,json}'],
+					data: ['src/data/index/*.{yml,json}'],
 					layout: 'index.hbs'
 				},
 				src: ['src/templates/site/index.hbs'],
@@ -28,11 +28,21 @@ module.exports = function(grunt) {
 			},
 			wizard: {
 				options: {
-					data: ['src/data/wizard/*.json'],
+					data: ['src/data/wizard/*.{yml,json}'],
 					layout: 'article.hbs'
 				},
 				src: ['src/templates/site/wizard.hbs'],
 				dest: 'tmp/assemble/'
+			}
+		},
+		connect: {
+			server: {
+				options: {
+					port: 9000,
+					base: ['tmp/assemble'],
+					open: true,
+					livereload: true
+				}
 			}
 		},
 		jshint: {
@@ -43,8 +53,18 @@ module.exports = function(grunt) {
 			options: {}
 		},
 		watch: {
+			options: {
+				livereload: true
+			},
 			data: {
-				files: 'src/data/*.{yml,json}',
+				files: 'src/data/**/*.{yml,json}',
+				tasks: ['assemble']
+			},
+			temp: {
+				files: ['tmp/assemble/**/*']
+			},
+			site: {
+				files: 'src/site/**/*',
 				tasks: ['assemble']
 			},
 			template: {
@@ -56,5 +76,6 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('default', []);
 	grunt.registerTask('test', ['jshint']);
-	grunt.registerTask('build', ['clean', 'test']);
+	grunt.registerTask('build', ['clean', 'test', 'assemble']);
+	grunt.registerTask('live', ['build', 'connect:server', 'watch']);
 };

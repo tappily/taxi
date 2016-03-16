@@ -1,14 +1,17 @@
 {{#extend 'default'}}
     {{#content 'styles' mode='append'}}{{{css 'component/wizard.css'}}}{{/content}}
     {{#content 'main'}}<main>
-        {{#eachProperty options}}
+        <form action="#{{meta.cid}}" method="get">
+            {{#eachProperty options}}
             <label>
                 {{sentence key}}
+                <select name="{{key}}">
+                    {{#each value}}<option{{#is @index 0}} selected{{/is}}>{{.}}</option>{{/each}}
+                </select>
             </label>
-            <select name="{{key}}">
-            {{#each value}}<option{{#is @index 0}} selected{{/is}}>{{.}}</option>{{/each}}
-            </select>
-        {{/eachProperty}}
-        <div{{#eachProperty options}} data-{{key}}="{{first value}}"{{/eachProperty}}></div>
+            {{/eachProperty}}
+            <button type="submit">Edit</button>
+        </form>
+        <div id="{{meta.cid}}"{{#eachProperty options}} data-{{key}}="{{first value}}"{{/eachProperty}}></div>
         {{> body}}</main>{{/content}}
 {{/extend}}

@@ -3,10 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>{{default title page.basename}}</title>
-    <meta name="description" content="{{default description}}">
+    <title>{{default meta.title page.basename}}</title>
+    <meta name="description" content="{{default meta.description page.basename}}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {{#block 'styles'}}{{css 'default.css'}}{{/block}}
+    {{#block 'styles'}}{{{css 'default.css'}}}{{/block}}
 </head>
 <body>
 {{#block 'header'}}<header>…</header>{{/block}}
