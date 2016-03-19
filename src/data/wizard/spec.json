@@ -1,0 +1,17 @@
+{
+  "title": "Wizard",
+  "name": "wizard",
+  "description": "Example component",
+  "tag": "section",
+  "options": {
+    "number": ["1", "2", "3"],
+    "letter": ["x", "y", "z"]
+  },
+  "styles": [
+    "wizard.css",
+    "wizards.css"
+  ],
+  "scripts": [
+    "wizard.js"
+  ]
+}

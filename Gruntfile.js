@@ -40,7 +40,7 @@ module.exports = function(grunt) {
 		},
 		concurrent: {
 			public: ['requirejs:site', 'assemble'],
-			'public-scripts': ['clean"public-scripts', ['test', 'requirejs:site']]
+			'public-scripts': ['clean:public-scripts', ['test', 'requirejs:site']]
 		},
 		connect: {
 			server: {

@@ -1,4 +1,6 @@
-define(['module', 'main'], function($module, $app) {
-	console.log($module, $app);
+define(['module', 'main', 'target'], function($module, $app, $target) {
+	return $target.done(function($target) {
+		$app($target);
+	});
 });
 

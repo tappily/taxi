@@ -1,18 +1,23 @@
 {{#extend 'default'}}
-    {{#content 'styles' mode='append'}}{{{css 'component/wizard.css'}}}{{/content}}
-    {{#content 'scripts' mode='append'}}{{{js 'site.js'}}}{{/content}}
-    {{#content 'main'}}<main>
-        <form action="#{{meta.cid}}" method="get">
-            {{#eachProperty options}}
-            <label>
-                {{sentence key}}
-                <select name="{{key}}">
-                    {{#each value}}<option{{#is @index 0}} selected{{/is}}>{{.}}</option>{{/each}}
-                </select>
-            </label>
-            {{/eachProperty}}
-            <button type="submit">Edit</button>
-        </form>
-        <div id="{{meta.cid}}"{{#eachProperty options}} data-{{key}}="{{first value}}"{{/eachProperty}}></div>
-        {{> body}}</main>{{/content}}
+        {{#content 'styles' mode='append'}}
+            {{{css spec.styles}}}
+        {{/content}}
+        {{#content 'scripts' mode='append'}}{{{js 'site.js'}}}{{/content}}
+        {{#content 'main'}}<main>
+            {{#with spec}}
+                <form action="#{{name}}" method="get">
+                    {{#eachProperty options}}
+                    <label>
+                        {{sentence key}}
+                        <select name="{{key}}">
+                            {{#each value}}<option{{#is @index 0}} selected{{/is}}>{{.}}</option>{{/each}}
+                        </select>
+                    </label>
+                    {{/eachProperty}}
+                    <button type="submit">Edit</button>
+                </form>
+                <{{default tag 'div'}} id="{{name}}"{{#eachProperty options}} data-{{key}}="{{first value}}"{{/eachProperty}}></{{default tag 'div'}}>
+            {{/with}}
+            {{> body}}
+        </main>{{/content}}
 {{/extend}}
